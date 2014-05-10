@@ -1,8 +1,8 @@
 {
-    "name": "breeze",
+    "name": "poste",
     "private": true,
     "version": "0.0.0",
-    "description": "a Sails application",
+    "description": "Taking it back to email",
     "dependencies": {
         "sails": "0.9.9",
         "grunt": "0.4.1",
