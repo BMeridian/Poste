@@ -1,2 +1,3 @@
-# breeze
-### a Sails application
+# Breeze
+
+### Taking it back to email
