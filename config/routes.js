@@ -20,7 +20,7 @@
  * http://links.sailsjs.org/docs/config/routes
  */
 
-mmodule.exports.routes = {
+module.exports.routes = {
     '/' : {
          controller: 'main',
          action: 'index'
