@@ -14,7 +14,7 @@
  		var username = req.param("username");
  		var password = req.param("password");
 
- 		Users.findOneByUsername(username).done(function(err, usr){
+ 		Users.findOneByUsername(username, function(err, usr){
  			if (err) {
  				res.send(500, { error: "DB Error" });
  			} else if (usr) {
@@ -39,7 +39,7 @@
  		var username = req.param("username");
  		var password = req.param("password");
 
- 		Users.findOneByUsername(username).done(function(err, usr) {
+ 		Users.findOneByUsername(username, function(err, usr) {
  			if (err) {
  				res.send(500, { error: "DB Error" });
  			} else {
@@ -57,7 +57,7 @@
  			}
  		});
  	},
- 	
+
  	chat: function (req, res) {
  		if (req.session.user) {
  			res.view({username: req.session.user.username});
