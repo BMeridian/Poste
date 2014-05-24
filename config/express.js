@@ -84,25 +84,25 @@ module.exports.express = {
       clientID: "YOUR_CLIENT_ID",
       clientSecret: "YOUR_CLIENT_SECRET",
       callbackURL: "http://localhost:1337/auth/github/callback"
-    }, verifyHandler));
+    }, socialHandler));
 
     passport.use(new FacebookStrategy({
       clientID: "YOUR_CLIENT_ID",
       clientSecret: "YOUR_CLIENT_SECRET",
       callbackURL: "http://localhost:1337/auth/facebook/callback"
-    }, verifyHandler));
+    }, socialHandler));
 
     passport.use(new GoogleStrategy({
       clientID: 'YOUR_CLIENT_ID',
       clientSecret: 'YOUR_CLIENT_SECRET',
       callbackURL: 'http://localhost:1337/auth/google/callback'
-    }, verifyHandler));
+    }, socialHandler));
 
     passport.use(new TwitterStrategy({
       consumerKey: 'YOUR_CLIENT_ID',
       consumerSecret: 'YOUR_CLIENT_SECRET',
       callbackURL: 'http://localhost:1337/auth/twitter/callback'
-    }, verifyHandler));
+    }, socialHandler));
 
     passport.use(new LocalStrategy(localHandler));
 
