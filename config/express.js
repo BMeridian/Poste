@@ -2,17 +2,44 @@ var passport            = require('passport')
     , GitHubStrategy    = require('passport-github').Strategy
     , FacebookStrategy  = require('passport-facebook').Strategy
     , GoogleStrategy    = require('passport-google-oauth').OAuth2Strategy
-    , TwitterStrategy   = require('passport-twitter').Strategy;
-    //, LocalStrategy     = require();
+    , TwitterStrategy   = require('passport-twitter').Strategy
+    , LocalStrategy     = require('passport-local').Strategy
+    , bcrypt            = require('bcrypt');
+
+var localHandler = function localHandler(username, password, done) {
+  process.nextTick(function() {
+    Users.findByUsername(username, function(err, user) {
+      if (err) {
+        return done(null,false)
+      }
+      else if (user) {
+        bcrypt.compare(password, user.password, function(err, res) {
+          if (!res) return done(null, false, { message: 'Invalid Password'});
+          return done(null, user);
+        });
+      }
+      else {
+        Users.create({
+          username: username,
+          password: password
+        }, function(err, user) {
+            return done(err, user);
+        });
+      }
+    });
+  });
+};
 
 
-var verifyHandler = function(token, tokenSecret, profile, done) {
+var socialHandler = function socialHandler(token, tokenSecret, profile, done) {
   process.nextTick(function() {
 
-    User.findOne({id: profile.id}, function(err, user) {
+    Users.findOneById(profile.id, function(err, user) {
       if (user) {
         return done(null, user);
-      } else {
+      } 
+
+      else {
 
         var data = {
           provider: profile.provider,
@@ -76,6 +103,8 @@ module.exports.express = {
       consumerSecret: 'YOUR_CLIENT_SECRET',
       callbackURL: 'http://localhost:1337/auth/twitter/callback'
     }, verifyHandler));
+
+    passport.use(new LocalStrategy(localHandler));
 
     app.use(passport.initialize());
     app.use(passport.session());

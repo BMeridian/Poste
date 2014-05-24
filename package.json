@@ -28,7 +28,9 @@
     "passport-facebook": "^1.0.3",
     "passport-github": "^0.1.5",
     "passport-twitter": "^1.0.2",
-    "passport-google-oauth": "^0.1.5"
+    "passport-google-oauth": "^0.1.5",
+    "passport-local": "1.0.0",
+    "bcrypt": "0.7.8"
   },
   "scripts": {
     "start": "node app.js",
