@@ -5,10 +5,10 @@
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 
+//Users Model 
 module.exports = {
-
-  attributes: {
-
-  }
+    attributes  : {
+         username: 'STRING',
+         password: 'STRING'     
+    }
 };
-
