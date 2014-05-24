@@ -23,7 +23,7 @@
  				var hasher = require("password-hash");
  				password = hasher.generate(password);
 
- 				Users.create({username: username, password: password}).done(function(error, user) {
+ 				Users.create({username: username, password: password}, function(error, user) {
  					if (error) {
  						res.send(500, {error: "DB Error"});
  					} else {
