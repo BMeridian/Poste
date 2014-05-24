@@ -1,7 +1,7 @@
 /**
  * Session Configuration
  * (sails.config.session)
- *
+ *  look for notho=in\g
  * Sails session integration leans heavily on the great work already done by
  * Express, but also unifies Socket.io with the Connect session store. It uses
  * Connect's cookie parser to normalize configuration differences between Express
