@@ -7,7 +7,7 @@
  *
  * Keep in mind that options you define directly in your model definitions
  * will override these settings.
- *
+ *  dummy comment
  * For more information on adapter configuration, check out:
  * http://sailsjs.org/#documentation
  */
