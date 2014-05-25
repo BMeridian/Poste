@@ -10,6 +10,8 @@
     var MessageModel = Backbone.Model.extend({
         urlRoot: '/messages',
     });
+
+    var user = "<%= username %>"
  
     var MessageCollection = Backbone.Collection.extend({
         url: '/messages',
@@ -21,7 +23,7 @@
  
     $("#postMessageButton").click(function(){
         var messageText = $("#message").val();
-        messages.create({message: messageText}, {wait: true});
+        messages.create({message: messageText, username: user}, {wait: true});
         $("#message").val("");
     });
 
@@ -34,14 +36,17 @@ var MessagesView = Backbone.View.extend({
         this.collection.on('add', this.render, this);
         this.render();
     },
-    template: _.template("<div><p><b><%= username %>: </b>{{ message }}</p></div>"),
+    template: _.template("<div><p><b>{{ username }}: </b>{{ message }}</p></div>"),
         render: function () {
             this.$el.html("");
             this.collection.each(function(msg){
+                apple = msg.toJSON()
+                console.log(msg.toJSON())
                 this.$el.append(this.template(msg.toJSON()));
             }, this)
     }
 });
+
  
 var mView = new MessagesView({collection: messages});
 </script>
