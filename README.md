@@ -1,3 +1,3 @@
-# Poste
+# poste
 
-### Taking it back to email
+a [Sails](http://sailsjs.org) application
