@@ -4,7 +4,6 @@ var passport            = require('passport')
     //, GoogleStrategy    = require('passport-google-oauth').OAuth2Strategy
     //, TwitterStrategy   = require('passport-twitter').Strategy
     , LocalStrategy     = require('passport-local').Strategy
-    , bcrypt            = require('bcrypt');
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
