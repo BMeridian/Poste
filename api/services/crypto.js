@@ -28,7 +28,7 @@ module.exports = {
    */
   compare: function(input, hash, cb){
   	Bcrypt.compare(input, hash, function(err, res) {
-  		return cb(res);
+  		return cb(err, res);
     });
   },
   /**
