@@ -12,13 +12,12 @@ module.exports = {
    * `AuthController.login()`
    */
   login: function (req, res) {
-    passport.authenticate('local', function(err, user, info){
+    passport.authenticate('local', {'session': false}, function(err, user, info){
       if (err) return res.serverError(err)
       if (!user) return res.notProcessed('Username or Password incorrect')
-      req.login(user, function(err){
-        if (err) return res.serverError(err)
-        res.ok('Successful Login')
-      })
+      newToken = crypto.token()
+      req.session[newToken] =  user.id
+      res.ok({message: 'Log in Successful', token: newToken, id: user.id})
     })(req, res);
   },
 
@@ -27,7 +26,7 @@ module.exports = {
    * `AuthController.logout()`
    */
   logout: function (req, res) {
-    req.logout();
+    delete req.session[req.headers['Authorization']]
     res.ok('Successful Logout')
   }
 };

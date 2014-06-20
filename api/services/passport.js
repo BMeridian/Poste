@@ -4,6 +4,7 @@ var passport            = require('passport')
     //, GoogleStrategy    = require('passport-google-oauth').OAuth2Strategy
     //, TwitterStrategy   = require('passport-twitter').Strategy
     , LocalStrategy     = require('passport-local').Strategy
+    , BearerStrategy		= require('passport-http-bearer').Strategy;
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -28,6 +29,22 @@ var localHandler = function localHandler(username, password, done) {
     })
   });
 };
+
+var tokenHandler = function tokenHandler(req, token, done) {
+	process.nextTick(function() {
+		token = req.headers['Authorization']
+		if (token) {
+			if (req.session[token]) {
+				Users.findOne({id: req.session[token]}, function(err, user) {
+					if (err) return done(err)
+					if (!user) return done(null, false)
+					done(null, user)
+				})
+			}
+		}
+	})
+}
+
 
 /* TODO: add support for social
     passport.use(new GitHubStrategy({
@@ -57,5 +74,6 @@ var localHandler = function localHandler(username, password, done) {
 
 
 passport.use(new LocalStrategy(localHandler));
+passport.use(new BearerStrategy({ 'passReqToCallback': true }, tokenHandler));
 
 module.exports = passport

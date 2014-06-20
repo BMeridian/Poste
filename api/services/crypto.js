@@ -1,5 +1,6 @@
 var Bcrypt = require('bcrypt'),
-    Crypto = require('crypto');
+    Crypto = require('crypto'),
+    uuid   = require('node-uuid');
 
 module.exports = {
 	
@@ -36,8 +37,7 @@ module.exports = {
    * @param  {string}   input            the input to be hashed
    * @param  {Function} cb[err, hash]    the callback to call when hashing is finished
    */
-  token: function(input){
-    var hash = Crypto.createHash('md5').update(input).digest('hex');
-    return hash;
+  token: function (){
+    return uuid.v4()
   }
 }
