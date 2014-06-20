@@ -13,9 +13,16 @@ module.exports = {
    * `UsersController.create()`
    */
   create: function (req, res) {
-    return res.json({
-      todo: 'create() is not implemented yet!'
-    });
+    newuser = {
+      name: req.param('name'),
+      username: req.param('username'),
+      email: req.param('email'),
+      password: req.param('password')
+    }
+    Users.create(newuser, function(err, user){
+      if (err || !user) return res.serverError(err)
+      return res.ok(user)
+    })
   },
 
 

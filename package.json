@@ -7,8 +7,8 @@
   "dependencies": {
     "sails": "~0.10.0-rc7",
     "sails-disk": "~0.10.0",
-    "sails-mongo": "0.10.x",
-    "sails-redis": "0.9.3",
+    "sails-mongo": "~0.10.0",
+    "sails-redis": "~0.10.0",
     "rc": "~0.3.3",
     "include-all": "~0.1.3",
     "ejs": "~0.8.4",

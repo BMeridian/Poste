@@ -25,16 +25,16 @@ module.exports.routes = {
          controller: 'main',
          action: 'index'
     },
-    '/signup' : {
-         controller: 'main',
-         action: 'signup'
+    'POST /signup' : {
+         controller: 'users',
+         action: 'create'
     },
-    '/login' : {
-         controller: 'main',
+    'POST /login' : {
+         controller: 'auth',
          action: 'login'
     },
-    '/chat' : {
-         controller: 'main',
-         action: 'chat'
+    'POST /logout' : {
+         controller: 'auth',
+         action: 'logout'
     }
 };
