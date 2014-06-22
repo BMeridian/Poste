@@ -52,9 +52,26 @@ module.exports = {
    * `UsersController.update()`
    */
   update: function (req, res) {
-    return res.json({
-      todo: 'update() is not implemented yet!'
+    var name      = req.param('name'),
+        username  = req.param('username'),
+        email     = req.param('email'),
+        password  = req.param('password')
+
+    Users.findOne({id: req.param('id')}).exec(function(err, user) {
+      if (err) return res.serverError(err)
+      if (!user) return res.notFound('No User with that id')
+
+      if (name) user.name = name;
+      if (username) user.username = username;
+      if (email) user.email    = email;
+      if (password) user.password = password;
+
+      user.save(function(err, user){
+        if (err || !user) return res.serverError(err)
+        return res.ok(user)
+      });
     });
+
   },
 
 
