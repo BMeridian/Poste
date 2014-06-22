@@ -8,14 +8,7 @@
 module.exports = {
 
   attributes: {
-
-    create : { type: 'string' },
-
-    read : { type: 'string' },
-
-    update : { type: 'string' },
-
-    destroy : { type: 'string' }
+  	
   }
 };
 

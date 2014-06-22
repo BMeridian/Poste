@@ -22,7 +22,7 @@ module.exports = {
   /**
    * `FriendsController.read()`
    */
-  read: function (req, res) {
+  find: function (req, res) {
     return res.json({
       todo: 'read() is not implemented yet!'
     });

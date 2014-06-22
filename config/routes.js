@@ -21,10 +21,6 @@
  */
 
 module.exports.routes = {
-    '/' : {
-         controller: 'main',
-         action: 'index'
-    },
     'POST /signup' : {
          controller: 'users',
          action: 'create'

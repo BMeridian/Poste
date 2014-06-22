@@ -27,12 +27,24 @@ module.exports = {
 
 
   /**
-   * `UsersController.read()`
+   * `UsersController.find()`
    */
-  read: function (req, res) {
-    return res.json({
-      todo: 'read() is not implemented yet!'
-    });
+  find: function (req, res) {
+    Users.find().exec(function(err, users) {
+      if (err || !users) return res.serverError(err)
+      return res.ok(users)
+    })
+  },
+
+  /**
+   * `UsersController.findOne()`
+   */
+  findOne: function (req, res) {
+    Users.findOne({id: req.param('id')}).exec(function (err, user){
+      if (err) return res.serverError(err)
+      if (!user) return res.notFound('No User with that id')
+      return res.ok(user)
+    })
   },
 
 

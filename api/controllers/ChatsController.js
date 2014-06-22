@@ -1,7 +1,7 @@
 /**
- * MessagesController
+ * ChatsController
  *
- * @description :: Server-side logic for managing messages
+ * @description :: Server-side logic for managing chats
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
@@ -10,7 +10,7 @@ module.exports = {
 
 
   /**
-   * `MessagesController.create()`
+   * `ChatsController.create()`
    */
   create: function (req, res) {
     return res.json({
@@ -20,17 +20,17 @@ module.exports = {
 
 
   /**
-   * `MessagesController.read()`
+   * `ChatsController.find()`
    */
   find: function (req, res) {
     return res.json({
-      todo: 'read() is not implemented yet!'
+      todo: 'find() is not implemented yet!'
     });
   },
 
 
   /**
-   * `MessagesController.update()`
+   * `ChatsController.update()`
    */
   update: function (req, res) {
     return res.json({
@@ -40,7 +40,7 @@ module.exports = {
 
 
   /**
-   * `MessagesController.destroy()`
+   * `ChatsController.destroy()`
    */
   destroy: function (req, res) {
     return res.json({
