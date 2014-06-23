@@ -21,7 +21,9 @@ module.exports.policies = {
   '*': true,
   
   UsersController: {
-  	create: 'reqUserIsUnique'
+  	'*': 'isAuthenticated',
+  	'create': [true, 'reqUserIsUnique']
+
   }
 	// Here's an example of mapping some policies to run before
   // a controller and its actions

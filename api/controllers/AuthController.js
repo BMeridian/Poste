@@ -13,11 +13,13 @@ module.exports = {
    */
   login: function (req, res) {
     passport.authenticate('local', {'session': false}, function(err, user, info){
+      sails.log.info(user)
       if (err) return res.serverError(err)
       if (!user) return res.notProcessed('Username or Password incorrect')
-      newToken = crypto.token()
-      req.session[newToken] =  user.id
-      res.ok({message: 'Log in Successful', token: newToken, id: user.id})
+      Tokens.create({user: user.id}).exec(function(err,token){
+        if (err || !token) return res.serverError(err)
+        return res.ok(token)
+      })
     })(req, res);
   },
 
@@ -26,8 +28,16 @@ module.exports = {
    * `AuthController.logout()`
    */
   logout: function (req, res) {
-    delete req.session[req.headers['Authorization']]
-    res.ok('Successful Logout')
+    var reqtoken = auth.token(req)
+    sails.log.info(reqtoken)
+    Tokens.findOne({token: reqtoken}).exec(function(err, token){
+      if (err) return res.serverError(err)
+      if (!token) return res.notFound('Not Logged in')
+    })
+    Tokens.destroy({token: reqtoken}).exec(function(err){
+      if (err) return res.serverError(err)
+      return res.ok('Successful Logout')
+    })
   }
 };
 

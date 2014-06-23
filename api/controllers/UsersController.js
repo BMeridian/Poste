@@ -52,14 +52,16 @@ module.exports = {
    * `UsersController.update()`
    */
   update: function (req, res) {
-    var name      = req.param('name'),
+    var token     = auth.token(req),
+        name      = req.param('name'),
         username  = req.param('username'),
         email     = req.param('email'),
-        password  = req.param('password')
+        password  = req.param('password');
 
-    Users.findOne({id: req.param('id')}).exec(function(err, user) {
+    Tokens.findOne({token: token}).populate('user').exec(function (err, token){
       if (err) return res.serverError(err)
-      if (!user) return res.notFound('No User with that id')
+      if (!token) return res.forbidden('Invalid token')
+      var user = token.user
 
       if (name) user.name = name;
       if (username) user.username = username;
@@ -70,8 +72,7 @@ module.exports = {
         if (err || !user) return res.serverError(err)
         return res.ok(user)
       });
-    });
-
+    })
   },
 
 
@@ -79,9 +80,27 @@ module.exports = {
    * `UsersController.destroy()`
    */
   destroy: function (req, res) {
-    return res.json({
-      todo: 'destroy() is not implemented yet!'
-    });
+    var token     = auth.token(req),
+        password  = req.param('password');
+
+    Tokens.findOne({token: token}).populate('user').exec(function (err, token){
+      if (err) return res.serverError(err)
+      if (!token) return res.notFound('Invalid Token')
+      var user = token.user
+
+      crypto.compare(password, user.password, function(err, result){
+        if (err) return res.serverError(err)
+        if (!result) return res.forbidden('Wrong Password')
+        Tokens.destroy({user: user.id}).exec(function (err){
+          if (err) return res.serverError(err)
+          sails.log.info('All User Tokens Deleted')
+        })
+        Users.destroy({id: user.id}).exec(function (err){
+          if (err) return res.serverError(err)
+          return res.ok('User deleted')
+        })
+      })
+    })
   }
 };
 

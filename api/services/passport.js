@@ -11,38 +11,35 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  Users.findOne({id: id}, function(err, user) {
+  Users.findOne({id: id}).exec(function(err, user) {
     done(err, user)
   });
 });
 
 var localHandler = function localHandler(username, password, done) {
   process.nextTick(function() {
-    Users.findOne({username: username}, function(err, user){
+    Users.findOne({username: username}).exec(function(err, user){
       if (err) return done(err)
       if (!user) return done(null, false)
 
       crypto.compare(password, user.password, function(err, res) {
-          if (!res) return done(null, false);
+          if (err || !res) return done(null, false);
           return done(null, user);
       });
     })
   });
 };
 
-var tokenHandler = function tokenHandler(req, token, done) {
-	process.nextTick(function() {
-		token = req.headers['Authorization']
-		if (token) {
-			if (req.session[token]) {
-				Users.findOne({id: req.session[token]}, function(err, user) {
-					if (err) return done(err)
-					if (!user) return done(null, false)
-					done(null, user)
-				})
-			}
-		}
-	})
+
+var tokenHandler = function tokenHandler(accessToken, done) {
+  process.nextTick(function() {
+    Tokens.findOne({token: accessToken}).populate('user').exec(function(err, token) {
+      if (err) return done(err)
+      if (!token) return done(null, false)
+        
+      return done(null, token.user, token.scopes)
+    })
+  });
 }
 
 
@@ -74,6 +71,6 @@ var tokenHandler = function tokenHandler(req, token, done) {
 
 
 passport.use(new LocalStrategy(localHandler));
-passport.use(new BearerStrategy({ 'passReqToCallback': true }, tokenHandler));
+passport.use(new BearerStrategy(tokenHandler));
 
 module.exports = passport

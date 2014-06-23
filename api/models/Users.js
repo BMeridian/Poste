@@ -26,6 +26,10 @@ module.exports = {
       type: 'string',
       required: true
     },
+    tokens: {
+      collection: 'Tokens',
+      via: 'user'
+    },
 
     /**
      * Strips the password out of the json
@@ -35,7 +39,9 @@ module.exports = {
     toJSON: function() {
       // this gives you an object with the current values
       var obj = this.toObject();
+
       delete obj.password;
+      delete obj.tokens;
 
       // return the new object without password
       return obj;

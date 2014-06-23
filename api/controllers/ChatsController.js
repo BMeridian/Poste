@@ -30,6 +30,16 @@ module.exports = {
 
 
   /**
+   * `ChatsController.findOne()`
+   */
+  findOne: function (req, res) {
+    return res.json({
+      todo: 'findOne() is not implemented yet!'
+    });
+  },
+
+
+  /**
    * `ChatsController.update()`
    */
   update: function (req, res) {
