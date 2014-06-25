@@ -49,7 +49,9 @@ module.exports.connections = {
   // Run:
   // npm install sails-mongo
   //
+
   /*
+  //Mongo Labs DB
   mongo: {
     adapter: 'sails-mongo',
     host: 'ds045679.mongolab.com',
@@ -59,6 +61,8 @@ module.exports.connections = {
     database: 'devdb'
   }
   */
+
+  //Mongo HQ DB
   mongo: {
     adapter: 'sails-mongo',
     host: 'kahana.mongohq.com',

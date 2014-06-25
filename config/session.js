@@ -43,13 +43,15 @@ module.exports.session = {
   // pass: <redis auth password>
   // prefix: 'sess:'
 
-  //OLD STUFFz
-  //host: 'redis://redistogo:3316b4b9e4616b6aa8291db46bb2f3c0@angelfish.redistogo.com',
-  //port: 10050,
-  //ttl: 2000,
-  //pass: 'TKB4repo$db'
-  //db: 0,
-  //prefix: 'sess:'
+  //Redis To Go Configuration
+  /*
+  host: 'redis://redistogo:3316b4b9e4616b6aa8291db46bb2f3c0@angelfish.redistogo.com',
+  port: 10050,
+  ttl: 2000,
+  pass: 'TKB4repo$db'
+  db: 0,
+  prefix: 'sess:'
+  */
 
 
   // Uncomment the following lines to use your Mongo adapter as a session store

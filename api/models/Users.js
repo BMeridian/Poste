@@ -26,6 +26,15 @@ module.exports = {
       type: 'string',
       required: true
     },
+    chats: {
+      collection: 'chats',
+      via: 'participants',
+      dominant: true
+    },
+    friends: {
+      collection: 'Users',
+      via: 'id'
+    },
     tokens: {
       collection: 'Tokens',
       via: 'user'

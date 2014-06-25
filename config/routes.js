@@ -21,10 +21,14 @@
  */
 
 module.exports.routes = {
+    
+    //UsersController
     'POST /signup' : {
          controller: 'users',
          action: 'create'
     },
+
+    //AuthsController
     'POST /login' : {
          controller: 'auth',
          action: 'login'
@@ -32,5 +36,16 @@ module.exports.routes = {
     'POST /logout' : {
          controller: 'auth',
          action: 'logout'
+    },
+
+    //FriendsController
+    'POST /friends/:id' : {
+        controller: 'friends',
+        action: 'create'
+    },
+
+    'DELETE /friends/:id' : {
+        controller: 'friends',
+        action: 'destroy'
     }
 };

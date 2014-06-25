@@ -40,7 +40,7 @@ module.exports = {
    * `UsersController.findOne()`
    */
   findOne: function (req, res) {
-    Users.findOne({id: req.param('id')}).exec(function (err, user){
+    Users.findOne({id: req.param('id')}).populate('friends').exec(function (err, user){
       if (err) return res.serverError(err)
       if (!user) return res.notFound('No User with that id')
       return res.ok(user)

@@ -36,7 +36,6 @@ var tokenHandler = function tokenHandler(accessToken, done) {
     Tokens.findOne({token: accessToken}).populate('user').exec(function(err, token) {
       if (err) return done(err)
       if (!token) return done(null, false)
-        
       return done(null, token.user, token.scopes)
     })
   });

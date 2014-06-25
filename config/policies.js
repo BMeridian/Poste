@@ -23,7 +23,20 @@ module.exports.policies = {
   UsersController: {
   	'*': 'isAuthenticated',
   	'create': [true, 'reqUserIsUnique']
+  },
 
+  FriendsController: {
+  	'*': 'isAuthenticated',
+  	'create': 'areNotFriends',
+  	'destroy': 'areFriends'
+  },
+  
+  ChatsController: {
+  	'*': 'isAuthenticated'
+  },
+  
+  MessagesController: {
+  	'*': 'isAuthenticated'
   }
 	// Here's an example of mapping some policies to run before
   // a controller and its actions
