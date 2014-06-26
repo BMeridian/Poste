@@ -52,7 +52,7 @@ module.exports = {
 
       Users.findOne({id: token.user.id}).populate('chats').exec(function (err, user){
         if (err) return res.serverError(err)
-        if (!user) return res.forbidden('user doesn\'t exist')
+        if (!user) return res.notFound('user doesn\'t exist')
 
         return res.ok(user.chats)
       })
@@ -63,21 +63,26 @@ module.exports = {
    * `ChatsController.findOne()`
    */
   findOne: function (req, res) {
-    return res.json({
-      todo: 'findOne() is not implemented yet!'
-    });
+    var id = req.param('id');
+
+    Tokens.findOne({token: token}).populate('user').exec(function(err, token){
+      if (err) return res.serverError(err)
+      if (!token) return res.forbidden('Token invalid, please login')
+
+      Users.findOne({id: token.user.id}).populate('chats').exec(function(err, user){
+        if (err) return res.serverError(err)
+        if (!user) return res.notFound('User doesn\'t exist')
+
+        users.chats.forEach(function(chat){
+          if (chat.id = id) {
+            return res.ok(chat)
+          }
+        })
+        return res.notFound('No chat with that id exists, for this user')
+      })
+
+    })
   },
-
-
-  /**
-   * `ChatsController.update()`
-   */
-  update: function (req, res) {
-    return res.json({
-      todo: 'update() is not implemented yet!'
-    });
-  },
-
 
   /**
    * `ChatsController.destroy()`
