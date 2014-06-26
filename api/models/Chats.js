@@ -8,16 +8,11 @@
 module.exports = {
 
   attributes: {
-  	participants: {
-  		collection: 'Users',
-  		via: 'chats',
-  		required: true
-  	},
-  	messages: {
-  		collection: 'Messages',
-  		via: 'chat'
-  	}
 
+  	participants: {
+  		collection: 'users',
+  		via: 'chats'
+  	}
   }
 };
 

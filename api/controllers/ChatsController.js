@@ -44,9 +44,18 @@ module.exports = {
    * `ChatsController.find()`
    */
   find: function (req, res) {
-    return res.json({
-      todo: 'find() is not implemented yet!'
-    });
+    var token = auth.token(req);
+
+    Tokens.findOne({token: token}).populate('user').exec(function(err, token){
+      if (err) return res.serverError(err)
+      if (!token) return res.forbidden('Token invalid, please login')
+
+      Users.findOne({id: token.user.id}).populate('chats').exec(function (err, user){
+        if (err) return res.serverError(err)
+        if (!user) return res.forbidden('user doesn\'t exist')
+
+        return res.ok(user.chats)
+      })
   },
 
 
