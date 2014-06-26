@@ -35,13 +35,11 @@
  				sails.log.debug('Found:')
  				sails.log.debug(found)
  			});
+ 			sails.log.debug('Found:')
+ 			sails.log.debug(found)
+ 			if(found) {next();}
+ 			else { res.badRequest('Users are not friends, pleade friend user before attempting this action');}
  		})
+ 		
  	})
- 	sails.log.debug('Found After Token:')
- 	sails.log.debug(found)
- 	if(found) {next();}
- 	sails.log.debug('Found After Token:')
- 	sails.log.debug(found)
- 	else {res.badRequest('Users are not friends, pleade friend user before attempting this action');}
-
  }
