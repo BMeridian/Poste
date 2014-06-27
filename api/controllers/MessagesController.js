@@ -47,21 +47,20 @@ module.exports = {
    * `MessagesController.read()`
    */
   find: function (req, res) {
-    return res.json({
-      todo: 'read() is not implemented yet!'
-    });
+    var token = auth.token(req);
+
+    Tokens.findOne({token: token}).populate('user').exec(function(err, token){
+      if (err) return res.serverError(err)
+      if (!token) return res.notFound('User doesn\'t exist')
+
+      Chats.findOne({id: req.param('id')}).populate('messages').exec(function(err, chat) {
+        if (err) return res.serverError(err)
+        if (!chat) return res.notFound('No chat with that id exists')
+
+        return res.ok(chat.messages)
+      })
+    })
   },
-
-
-  /**
-   * `MessagesController.update()`
-   */
-  update: function (req, res) {
-    return res.json({
-      todo: 'update() is not implemented yet!'
-    });
-  },
-
 
   /**
    * `MessagesController.destroy()`
