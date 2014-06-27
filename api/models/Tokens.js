@@ -30,15 +30,18 @@ module.exports = {
   	token.token = crypto.token();
   	return cb(null, token);
   },
-  afterDestroy: function(dToken, cb) {
-    Users.findOne({id: dToken.user}).exec(function(err, user){
-      if (err) return cb(err);
-      user.tokens.remove(dToken.id);
-      user.save(function(err){
+  afterDestroy: function(dTokens, cb) {
+    dTokens.forEach(function(dToken) {
+      sails.log.debug(dToken)
+      Users.findOne({id: dToken.user}).exec(function(err, user){
         if (err) return cb(err);
-        return cb();
+        user.tokens.remove(dToken.id);
+        user.save(function(err){
+          if (err) return cb(err);
+          return cb();
+        })
       })
-    })
+    }) 
   }
 
 };

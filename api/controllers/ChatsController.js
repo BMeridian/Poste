@@ -56,6 +56,7 @@ module.exports = {
 
         return res.ok(user.chats)
       })
+    })
   },
 
 
