@@ -91,10 +91,7 @@ module.exports = {
       crypto.compare(password, user.password, function(err, result){
         if (err) return res.serverError(err)
         if (!result) return res.forbidden('Wrong Password')
-        Tokens.destroy({user: user.id}).exec(function (err){
-          if (err) return res.serverError(err)
-          sails.log.info('All User Tokens Deleted')
-        })
+          
         Users.destroy({id: user.id}).exec(function (err){
           if (err) return res.serverError(err)
           return res.ok('User deleted')
