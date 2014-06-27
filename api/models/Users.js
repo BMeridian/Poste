@@ -72,5 +72,34 @@ module.exports = {
         return cb(null, user);
       }
     });
+  },
+  afterDestroy: function(dUser, cb) {
+    //Destroy all Tokens
+    Tokens.destroy({user: dUser.id}).exec(function(err){
+      if (err) sails.log.debug(err)
+      //Handle Error
+    })
+
+    //Disassociate all Friends
+    Users.find({id: dUser.friends}).exec(function(err, friends){
+      if (err) sails.log.debug(err)
+
+      friends.forEach(function(friend){
+        friend.friends.remove(dUser.id)
+        friend.save(function(err){
+          if (err) sails.log.debug(err)
+          //Handle Error
+        })
+      })
+      //Handle Error
+    })
+
+    //Destroy all Chats
+    dUser.chats.forEach(function(chatid){
+      Chats.destroy({id: chatid}).exec(function(err){
+        if (err) sails.log.debug(err)
+        //Handle Error
+      })
+    })    
   }
 };
