@@ -12,6 +12,10 @@ module.exports = {
   	participants: {
   		collection: 'users',
   		via: 'chats'
+  	},
+  	messages: {
+  		collection: 'messages',
+  		via: 'chat'
   	}
   }
 };

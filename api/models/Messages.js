@@ -8,7 +8,18 @@
 module.exports = {
 
   attributes: {
-
+  	content: {
+  		type: 'string',
+  		required: true
+  	},
+  	sender: {
+  		model: 'users',
+  		required: true
+  	},
+  	chat: {
+  		model: 'chats',
+  		required: true
+  	}
   }
 };
 
