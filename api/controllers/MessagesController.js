@@ -13,9 +13,33 @@ module.exports = {
    * `MessagesController.create()`
    */
   create: function (req, res) {
-    return res.json({
-      todo: 'create() is not implemented yet!'
-    });
+    var token = auth.token(req);
+
+    Tokens.findOne({token: token}).populate('user').exec(function(err, token){
+      if (err) return res.serverError(err)
+      if (!token) return res.notFound('User doesn\'t exist')
+
+      Chats.findOne({id: req.param('id')}).exec(function(err, chat){
+        if (err) return res.serverError(err)
+        if (!chat) return res.notFound('No chat with that id exists')
+
+        var params = {
+          content: req.param('content'),
+          sender: token.user.id,
+          chat: chat.id
+        }
+
+        Messages.create(params).exec(function(err, messsage){
+          if (err) return res.serverError(err)
+
+          chat.messages.add(message.id)
+          chat.save(function(err){
+            if (err) res.serverError(err)
+            return res.ok()
+          })
+        })
+      })
+    })
   },
 
 
