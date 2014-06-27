@@ -76,8 +76,7 @@ module.exports = {
   afterDestroy: function(dUser, cb) {
     //Destroy all Tokens
     Tokens.destroy({user: dUser.id}).exec(function(err){
-      if (err) sails.log.debug(err)
-      //Handle Error
+      if (err) return cb(err);
     })
 
     //Disassociate all Friends
@@ -87,19 +86,18 @@ module.exports = {
       friends.forEach(function(friend){
         friend.friends.remove(dUser.id)
         friend.save(function(err){
-          if (err) sails.log.debug(err)
-          //Handle Error
+          if (err) return cb(err);
         })
       })
-      //Handle Error
+
     })
 
     //Destroy all Chats
     dUser.chats.forEach(function(chatid){
       Chats.destroy({id: chatid}).exec(function(err){
-        if (err) sails.log.debug(err)
-        //Handle Error
+        if (err) return cb(err);
       })
-    })    
+    }) 
+    return cb();   
   }
 };
