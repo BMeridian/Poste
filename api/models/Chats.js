@@ -17,6 +17,13 @@ module.exports = {
   		collection: 'messages',
   		via: 'chat'
   	}
+  },
+  afterDestroy: function(dChat, cb) {
+  	// Delete Associated Messages
+  	Messages.destroy({chat: dChat.id}).exec(function(err){
+  		if (err) return cb(err);
+  		return cb();
+  	})
   }
 };
 

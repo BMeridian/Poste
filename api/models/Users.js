@@ -97,7 +97,8 @@ module.exports = {
       Chats.destroy({id: chatid}).exec(function(err){
         if (err) return cb(err);
       })
+      return cb();
     }) 
-    return cb();   
+       
   }
 };
