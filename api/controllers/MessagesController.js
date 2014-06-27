@@ -66,9 +66,16 @@ module.exports = {
    * `MessagesController.destroy()`
    */
   destroy: function (req, res) {
-    return res.json({
-      todo: 'destroy() is not implemented yet!'
-    });
+    var token = auth.token(req);
+
+    Tokens.findOne({token: token}).populate('user').exec(function(err, token){
+      if (err) return res.serverError(err)
+      if (!token) return res.notFound('User doesn\'t exist')
+      Messages.destroy({id: req.param('id')}).exec(function(err){
+        if (err) return res.serverError(err)
+        return res.ok('message deleted')
+      })
+    })
   }
 };
 
