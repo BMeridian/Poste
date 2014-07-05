@@ -6,6 +6,7 @@
   "keywords": [],
   "dependencies": {
     "bcrypt": "0.7.8",
+    "connect-redis": "~1.4.7",
     "ejs": "~0.8.4",
     "grunt": "0.4.2",
     "grunt-contrib-clean": "~0.5.0",
@@ -35,7 +36,8 @@
     "sails-mongo": "~0.10.0",
     "sails-redis": "~0.10.0",
     "connect-flash": "^0.1.1",
-    "connect-redis": "~1.4.7"
+    "connect-redis": "~1.4.7",
+    "verbal-expressions": "^0.1.2"
   },
   "scripts": {
     "start": "node app.js",
