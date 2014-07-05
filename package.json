@@ -32,7 +32,8 @@
     "sails": "~0.10.0-rc7",
     "sails-disk": "~0.10.0",
     "sails-mongo": "~0.10.0",
-    "sails-redis": "~0.10.0"
+    "sails-redis": "~0.10.0",
+    "connect-redis": "~1.4.7"
   },
   "scripts": {
     "start": "node app.js",
