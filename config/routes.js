@@ -21,20 +21,58 @@
  */
 
 module.exports.routes = {
-    '/' : {
-         controller: 'main',
-         action: 'index'
+    
+    //UsersController
+    'POST /signup' : {
+         controller: 'users',
+         action: 'create'
     },
-    '/signup' : {
-         controller: 'main',
-         action: 'signup'
-    },
-    '/login' : {
-         controller: 'main',
+
+    //AuthsController
+    'POST /login' : {
+         controller: 'auth',
          action: 'login'
     },
-    '/chat' : {
-         controller: 'main',
-         action: 'chat'
+    'POST /logout' : {
+         controller: 'auth',
+         action: 'logout'
+    },
+
+    //FriendsController
+    'POST /friends/:id' : {
+        controller: 'friends',
+        action: 'create'
+    },
+
+    'DELETE /friends/:id' : {
+        controller: 'friends',
+        action: 'destroy'
+    },
+
+    //ChatsController
+    'POST /chats/:id' : {
+        controller: 'chats',
+        action: 'create'
+    },
+
+    'GET /chats/' : {
+        controller: 'chats',
+        action: 'find'
+    },
+
+    'GET /chats/:id' : {
+        controller: 'chats',
+        action: 'findOne'
+    },
+
+    'DELETE /chats/:id' : {
+        controller: 'chats',
+        action: 'destroy'
+    },
+
+    //Messages Controller
+    'GET /messages/:id' : {
+        controller: 'messages',
+        action: 'find'
     }
 };

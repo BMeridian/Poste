@@ -19,7 +19,25 @@ module.exports.policies = {
   // Default policy for all controllers and actions
   // (`true` allows public access)
   '*': true,
-  'messages': 'MessagesPolicy'
+  
+  UsersController: {
+  	'*': 'isAuthenticated',
+  	'create': [true, 'reqUserIsUnique']
+  },
+
+  FriendsController: {
+  	'*': 'isAuthenticated',
+  	'create': 'areNotFriends',
+  	'destroy': 'areFriends'
+  },
+  
+  ChatsController: {
+  	'*': 'isAuthenticated'
+  },
+  
+  MessagesController: {
+  	'*': 'isAuthenticated'
+  }
 	// Here's an example of mapping some policies to run before
   // a controller and its actions
 	// RabbitController: {
