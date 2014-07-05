@@ -30,19 +30,25 @@ module.exports = {
   	token.token = crypto.token();
   	return cb(null, token);
   },
-  afterDestroy: function(dTokens, cb) {
-    dTokens.forEach(function(dToken) {
-      sails.log.debug(dToken)
-      Users.findOne({id: dToken.user}).exec(function(err, user){
-        if (err) return cb(err);
-        user.tokens.remove(dToken.id);
-        user.save(function(err){
+
+  beforeDestroy: function(criteria, cb) {
+    sails.log.debug('Criteria')
+    sails.log.debug(criteria)
+    Tokens.findOne(criteria).populate('user').exec(function(err, token){
+      if (err) cb(err);
+      sails.log.debug('Token:')
+      sails.log.debug(token)
+      Users.findOne({id: token.user.id}).populate('tokens').exec(function(err, user) {
+        if (err) cb(err);
+        sails.log.debug(user)
+        user.tokens.remove(token.token)
+        sails.log.debug(user)
+        user.save(function (err){
           if (err) return cb(err);
           return cb();
         })
       })
-    }) 
+    })
   }
-
 };
 

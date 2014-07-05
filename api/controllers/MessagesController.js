@@ -29,7 +29,7 @@ module.exports = {
           chat: chat.id
         }
 
-        Messages.create(params).exec(function(err, messsage){
+        Messages.create(params).exec(function(err, message){
           if (err) return res.serverError(err)
 
           chat.messages.add(message.id)
@@ -47,13 +47,16 @@ module.exports = {
    * `MessagesController.read()`
    */
   find: function (req, res) {
-    var token = auth.token(req);
+    var token = auth.token(req),
+        id = req.param('id');
+        
+        sails.log.info(id)
 
     Tokens.findOne({token: token}).populate('user').exec(function(err, token){
       if (err) return res.serverError(err)
       if (!token) return res.notFound('User doesn\'t exist')
 
-      Chats.findOne({id: req.param('id')}).populate('messages').exec(function(err, chat) {
+      Chats.findOne({id: id}).populate('messages').exec(function(err, chat) {
         if (err) return res.serverError(err)
         if (!chat) return res.notFound('No chat with that id exists')
 

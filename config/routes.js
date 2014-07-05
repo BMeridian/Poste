@@ -47,5 +47,32 @@ module.exports.routes = {
     'DELETE /friends/:id' : {
         controller: 'friends',
         action: 'destroy'
+    },
+
+    //ChatsController
+    'POST /chats/:id' : {
+        controller: 'chats',
+        action: 'create'
+    },
+
+    'GET /chats/' : {
+        controller: 'chats',
+        action: 'find'
+    },
+
+    'GET /chats/:id' : {
+        controller: 'chats',
+        action: 'findOne'
+    },
+
+    'DELETE /chats/:id' : {
+        controller: 'chats',
+        action: 'destroy'
+    },
+
+    //Messages Controller
+    'GET /messages/:id' : {
+        controller: 'messages',
+        action: 'find'
     }
 };

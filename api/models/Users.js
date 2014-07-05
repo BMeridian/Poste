@@ -73,32 +73,64 @@ module.exports = {
       }
     });
   },
-  afterDestroy: function(dUser, cb) {
-    //Destroy all Tokens
-    Tokens.destroy({user: dUser.id}).exec(function(err){
+
+  beforeDestroy: function(criteria, cb) {
+    var isdone = {tokens: false, friends: false, chats: false};
+    function cbCheck(test) {
+      if (test.tokens && test.friends && test.chats) {
+        return cb();
+      }
+    }
+
+    sails.log.debug('Criteria')
+    sails.log.debug(criteria)
+    Users.findOne(criteria)
+    .populate('chats')
+    .populate('tokens')
+    .populate('friends')
+    .exec(function (err, user){
+      sails.log.debug('User')
+      sails.log.debug(user)
       if (err) return cb(err);
-    })
-
-    //Disassociate all Friends
-    Users.find({id: dUser.friends}).exec(function(err, friends){
-      if (err) sails.log.debug(err)
-
-      friends.forEach(function(friend){
-        friend.friends.remove(dUser.id)
-        friend.save(function(err){
+      if (!user) return cb('User not found')  
+      //Destroy all tokens
+      user.tokens.forEach(function(token){
+        Tokens.destroy(token.token).exec(function(err){
+          if (err) return cb(err)/*
+          sails.log.debug('Tokens Done')
+          isdone.tokens = true
+          return cbCheck(isdone);
+          */
+          return
+        })
+        return
+      })
+      //Disassociate All Friends
+      user.friends.forEach(function(friend){
+        sails.log.info('Friends Running')
+        Users.findOne(friend.id).exec(function(err, dbfriend){
           if (err) return cb(err);
+          dbfriend.friends.remove(user.id);
+          dbfriend.save(function(err){
+            if (err) return cb(err);
+            /*
+            sails.log.debug('Friends Done')
+            isdone.friends = true
+            return cbCheck(isdone);
+            */
+          })
         })
       })
-
-    })
-
-    //Destroy all Chats
-    dUser.chats.forEach(function(chatid){
-      Chats.destroy({id: chatid}).exec(function(err){
-        if (err) return cb(err);
+      // Delete All Chats
+      user.chats.forEach(function (chat) {
+        Chats.destroy(chat.id).exec(function(err){
+          if(err) return cb(err);
+          /*
+          sails.log.debug('Chats Done')
+          isdone.chats = true
+          return cbCheck(isdone);*/
+        })
       })
-      return cb();
-    }) 
-       
+    })
   }
 };

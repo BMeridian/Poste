@@ -18,6 +18,10 @@ module.exports = {
       if (!user) return res.notProcessed('Username or Password incorrect')
       Tokens.create({user: user.id}).exec(function(err,token){
         if (err || !token) return res.serverError(err)
+        Users.findOne({id: user.id}).exec(function(err, user){
+          if (err) return res.serverError(err);
+          user.tokens.add(token.id)
+        })
         return res.ok(token)
       })
     })(req, res);
