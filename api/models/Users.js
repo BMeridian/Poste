@@ -5,6 +5,8 @@
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 
+moment = require('moment');
+
 module.exports = {
   attributes: {
 
@@ -35,9 +37,8 @@ module.exports = {
       collection: 'Users',
       via: 'id'
     },
-    tokens: {
-      collection: 'Tokens',
-      via: 'user'
+    token: {
+      unique: true
     },
 
     /**
@@ -63,6 +64,7 @@ module.exports = {
    * @param  {Function} cb[err, user]   the callback to be used when bcrypts done
    */
   beforeCreate: function(user, cb) {  
+    user.token = oment.utc().format("YYYYMMDDHHmmSSS") + crypto.token();
     crypto.generate({saltComplexity: 10}, user.password, function(err, hash){
       if(err){
         return cb(err);
@@ -73,6 +75,7 @@ module.exports = {
       }
     });
   },
+
 
   beforeDestroy: function(criteria, cb) {
     var isdone = {tokens: false, friends: false, chats: false};

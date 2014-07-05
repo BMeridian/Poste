@@ -12,6 +12,27 @@ module.exports = {
    * `AuthController.login()`
    */
   login: function (req, res) {
+
+// // curl -v -I http://127.0.0.1:3000/
+// // curl -v -I --user bob:secret --digest http://127.0.0.1:3000/
+// // curl -v -d "hello=world" --user bob:secret --digest http://127.0.0.1:3000/
+// app.all('/',
+//   // Authenticate using HTTP Digest credentials, with session support disabled.
+//   passport.authenticate('digest', { session: false }),
+//   function(req, res){
+//     res.json({ username: req.user.username, email: req.user.email });
+//   });
+
+// // curl -v -I --user bob:secret --digest "http://127.0.0.1:3000/sessions.json?sEcho=2&iColumns=12"
+// app.all('/sessions.json',
+//   // Authenticate using HTTP Digest credentials, with session support disabled.
+//   passport.authenticate('digest', { session: false }),
+//   function(req, res){
+//     res.json({ username: req.user.username, email: req.user.email });
+//   });
+
+
+
     passport.authenticate('local', {'session': false}, function(err, user, info){
       sails.log.info(user)
       if (err) return res.serverError(err)

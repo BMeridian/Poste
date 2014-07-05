@@ -5,7 +5,7 @@ var passport      = require('passport'),
 module.exports.express = {
 
   customMiddleware: function(app) {
-    sails.log.info('Passport Intialized')
+    // sails.log.info('Passport Intialized')
     app.use(passport.initialize());
     app.use(passport.session());
   }
