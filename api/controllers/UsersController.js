@@ -13,6 +13,13 @@ module.exports = {
    * `UsersController.create()`
    */
   create: function (req, res) {
+    var name      = req.param('name'),
+        username  = req.param('username'),
+        email     = req.param('email'),
+        password  = req.param('password');
+
+
+
     newuser = {
       name: req.param('name'),
       username: req.param('username'),
